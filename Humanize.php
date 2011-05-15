@@ -130,13 +130,28 @@
 				$parts[] = $ten_singles[$number[strlen($number)-1]];
 			} else {
 				$parts[] = $singles[$number[strlen($number)-1]];
-				$parts[] = $tens[$number[strlen($number)-2]];
+				if($number > 10) {
+					$parts[] = $tens[$number[strlen($number)-2]] . " -";
+				}
 			}
 
-			// need to handle "$singles hundred"
-			// need to handle thousands.
+			// special hundreds case (not a multiple of 3).
+			if($number > pow(10, 2)) {
+				$hundredsCount = $number[strlen($number)-3];
+				if($hundredsCount != 0) {
+					$parts[] = $singles[$hundredsCount] . " hundred";
+				}
+			}
+
+			$offset = 3;
+			foreach($thousands as $frag) {
+				if($number < pow(10,$offset+1)) break;
+				$part = substr($number, strlen($number)-$offset-3, 3);
+				$parts[] = HumanizePHP::checkize($part) . " {$frag},";
+				$offset+=3;
+			}
 			
-			return implode(" ", array_reverse($parts));	
+			return str_replace(" - ", "-", implode(" ", array_reverse($parts)));	
 		}
 
 	}
