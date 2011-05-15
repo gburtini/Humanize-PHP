@@ -9,5 +9,8 @@
 	echo HumanizePHP::naturalday(strtotime("-3 hours")) . "\n";
 	echo HumanizePHP::naturalday(strtotime("+24 hours")) . "\n";
 	echo HumanizePHP::naturalday(strtotime("-25 hours")) . "\n";
-	echo HumanizePHP::naturalday(strtotime("-3 weeks")) . "\n";	
+	echo HumanizePHP::naturalday(strtotime("-3 weeks")) . "\n";
+	
+	echo HumanizePHP::checkize(144);
+		
 ?>
