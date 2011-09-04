@@ -67,6 +67,7 @@
 		}
 
 		function naturalday($timestamp, $format='F j, Y') {
+			// this -60 deals with a bug in strtotime on (some?) PHP builds.
 			$end_tomorrow = strtotime("+2 days 12:01am")-60;
 			$tomorrow = strtotime("tomorrow 12:01am")-60;
 			$yesterday = strtotime("yesterday 12:01am")-60;
