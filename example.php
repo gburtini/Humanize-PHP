@@ -1,5 +1,5 @@
 <?php
-	require_once "Humanize.php";
+	require_once "src/HumanizePHP.php";
 
 	for($i=0;$i<100;$i++) {
 		echo HumanizePHP::ordinal($i) . "\t" . HumanizePHP::apnumber($i) . "\t" . HumanizePHP::intword($i*22000000) . "\n";

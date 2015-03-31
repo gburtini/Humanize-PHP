@@ -1,0 +1,24 @@
+{
+    "name": "gburtini/humanize-php",
+    "type": "library",
+    "description": "Provides functions for converting numbers and timestamps in to human friendly forms. Based on the Django Humanize API."
+    "keywords": ["numbers", "readable", "human-ready", "timestamps", "human-friendly", "Django", "Humanize"]
+    "homepage": "http://github.com/gburtini/HumanizePHP",
+    "license": "Apache",
+    "authors": [
+        {
+            "name": "Giuseppe Burtini",
+            "email": "joe@truephp.com",
+            "homepage": "http://giuseppeburtini.com/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.0.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "HumanizePHP": "src"
+        }
+    }
+}
