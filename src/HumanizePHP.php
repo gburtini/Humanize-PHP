@@ -1,7 +1,7 @@
 <?php
 	namespace gburtini;
 	class HumanizePHP {
-		function apnumber($number) {
+		static function apnumber($number) {
 			$replace = array(0=>"zero", 1=>"one", 2=>"two", 3=>"three",
 					4=>"four", 5=>"five", 6=>"six", 7=>"seven",
 					8=>"eight", 9=>"nine");
@@ -18,14 +18,14 @@
 			}
 		}
 
-		function intcomma($number, $decimals=0, $decimal='.', $separator=',') {
+		static function intcomma($number, $decimals=0, $decimal='.', $separator=',') {
 			return number_format($number, $decimals, $decimal, $separator);
 		}
 
 
 		// smallestAccepted is set to 1 million by default for
 		// adherence to the Django Humanize API.
-		function intword($number, $smallestAccepted=1000000, $decimals = 1) {
+		static function intword($number, $smallestAccepted=1000000, $decimals = 1) {
 			$number = intval($number);
 			if($number < $smallestAccepted) return $number;
 			
@@ -67,7 +67,7 @@
 			return $number;	// too big.			
 		}
 
-		function naturalday($timestamp, $format='F j, Y') {
+		static function naturalday($timestamp, $format='F j, Y') {
 			// this -60 deals with a bug in strtotime on (some?) PHP builds.
 			$end_tomorrow = strtotime("+2 days 12:01am")-60;
 			$tomorrow = strtotime("tomorrow 12:01am")-60;
@@ -81,7 +81,7 @@
 			return date($format, $timestamp);			
 		}
 
-		function ordinal($value) {
+		static function ordinal($value) {
 			$number = intval($value);
 			if($number == 0) return $value; 	// could be a bad string or just a 0.
 
@@ -110,7 +110,7 @@
 		// takes a number and turns it in to a string viable for writing on a cheque
 		// 124 -> one hundred and twenty four.
 		// 65535 -> sixty five thousand, five hundred and thirty five
-		function checkize($number) {
+		static function checkize($number) {
 			$singles = array(0=>"zero", 1=>"one", 2=>"two", 
 					 3=>"three", 4=>"four", 5=>"five",
 					 6=>"six", 7=>"seven", 8=>"eight",

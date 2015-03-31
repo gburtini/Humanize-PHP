@@ -1,6 +1,6 @@
 <?php
 	require_once "src/HumanizePHP.php";
-
+	use gburtini\HumanizePHP;
 	for($i=0;$i<100;$i++) {
 		echo HumanizePHP::ordinal($i) . "\t" . HumanizePHP::apnumber($i) . "\t" . HumanizePHP::intword($i*22000000) . "\n";
 	}
