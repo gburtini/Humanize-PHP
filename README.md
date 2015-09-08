@@ -9,6 +9,7 @@ This package is available in Packagist/Composer as ``gburtini/humanize-php``.
 Features
 --------
 
+* ``naturaltime($timestamp, $depth=1)`` returns "5 minutes ago" type responses from timestamp. ``$depth`` indicates how many units we should break your timestamp in to.
 * ``apnumber($n)`` returns the "Associated Press style" number, ``$n``, where numbers 1 thru 9 are returned as a word.
 * ``intcomma($n)`` comma-separates an integer, unlike Django, it does not respect format localization.
 * ``intword($n)`` returns the "word" for a given large number, for example, 1000000 becomes 1.0 million.
@@ -16,9 +17,6 @@ Features
 * ``ordinal($n)`` converts an integer in to its ordinal string (1st, 2nd, ...)
 * ``checkize($n)`` converts a number in to its check (cheque) ready word form. 65535 becomes "sixty five thousand, five hundred and thirty five." *not in Django*
 
-Future Work
------------
-The library is currently missing ``naturaltime``, which should take in a timestamp and return "now" or "5 minutes ago" type strings. 
 
 License
 -------
