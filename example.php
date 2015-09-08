@@ -16,4 +16,6 @@
 	echo HumanizePHP::checkize(9999999999) . "\n";		
 	echo HumanizePHP::checkize(198) . "\n";
 	echo HumanizePHP::checkize(999) . "\n";
+
+	echo HumanizePHP::naturaltime(time() + 60) . "\n";
 ?>

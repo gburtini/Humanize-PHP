@@ -8,7 +8,7 @@
 
 
 	class HumanizePHP {
-		static function naturaltime($timestamp, $depth=2, $time=null, $wrap_string=true) {
+		static function naturaltime($timestamp, $depth=1, $time=null, $wrap_string=true) {
 			// humanizes a timestamp, for example as a result from strtotime. naturaltime(time() + 60) returns "in 1 minute."
 			// depth indicates how many subscales to break the result down to, for example naturaltime(time() + 61) returns "in 1 minute", but naturaltime(time() + 61, 2) returns "in 1 minute and 1 second"
 			if($time === null)
@@ -33,14 +33,14 @@
 		
 			$totalfactor = 1;
 			foreach ($scales as $item) {
-				$singular = $item[0];
-				$plural = $item[1];
+				$singular = __($item[0]);
+				$plural = __($item[1]);
 				$factor = intval($item[2]);
 		
 				$age = abs($age);
 				
 				// TODO: optionally combine with apnumber to change numbers to words.
-				if($age == 0) return;
+				if ($age == 0) return;
 				if ($age == 1)
 					$response = sprintf(__("%d $singular"), 1);
 				else if($age < $factor)
@@ -64,20 +64,20 @@
 					false	// don't wrap with "in" and "ago" as we're still building the string.
 				));
 		
-				if($next == null) // we return null if there were none of this subelement. I think this should probably recurse one deeper (we may have to skip units), but rounding here is clean sometimes too (you probably don't want to say "1 decade and 4 seconds.")
-				return $response;
-		
-		
-				if($depth > 2) // deal with commas. there's probably a better (read: more language agnostic) way to do this (produce a list of $nexts and join them).
-					$response = $response . __(", ") . $next;
-				else
-					$response = $response . __(" and ") . $next;
-		
-			} 
-		
+				if($next != null) { // we return null if there were none of this subelement. I think this should probably recurse one deeper (we may have to skip units), but rounding here is clean sometimes too (you probably don't want to say "1 decade and 4 seconds.")	
+					if($depth > 2) // deal with commas. there's probably a better (read: more language agnostic) way to do this (produce a list of $nexts and join them).
+						$response = $response . __(", ") . $next;
+					else
+						$response = $response . __(" and ") . $next;
+				}
+			}
+ 
 			if($wrap_string) {
-				if($original < 0) { $response = sprintf(__("in %s"), $response); }
-				else { $response = sprintf(__("%s ago"), $response); }
+				if($original < 0) { 
+					$response = sprintf(__("in %s"), $response); 
+				} else { 
+					$response = sprintf(__("%s ago"), $response); 
+				}
 			}
 		
 			return $response;
