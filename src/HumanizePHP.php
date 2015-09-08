@@ -1,6 +1,89 @@
 <?php
 	namespace gburtini;
+	if(!function_exists("__")) {	// allows you to define your own translation architecture.
+		function __($string) { 
+			return $string;
+		}
+	}
+
+
 	class HumanizePHP {
+		static function naturaltime($timestamp, $depth=2, $time=null, $wrap_string=true) {
+			// humanizes a timestamp, for example as a result from strtotime. naturaltime(time() + 60) returns "in 1 minute."
+			// depth indicates how many subscales to break the result down to, for example naturaltime(time() + 61) returns "in 1 minute", but naturaltime(time() + 61, 2) returns "in 1 minute and 1 second"
+			if($time === null)
+				$time = time();
+			$age = $time - $timestamp;
+			if ($age == 0 && $wrap_string)
+				return __("just now");
+			$original = $age;
+		
+			// credit to Rich Remer for this data: http://stackoverflow.com/questions/8629788/php-strtotime-reverse
+			$scales = array( 
+				array('second', 'seconds', 60),
+				array('minute', 'minutes', 60),
+				array('hour', 'hours', 24),
+				array('day', 'days', 30),	// this would be better if we actually figured out the months... like strtotime does
+				array('month', 'months', 12),
+				array('year', 'years', 10),
+				array('decade', 'decades', 10),
+				array('century', 'centuries', 1000),
+				array('millenium', 'millenia', PHP_INT_MAX)
+		    	);
+		
+			$totalfactor = 1;
+			foreach ($scales as $item) {
+				$singular = $item[0];
+				$plural = $item[1];
+				$factor = intval($item[2]);
+		
+				$age = abs($age);
+				
+				// TODO: optionally combine with apnumber to change numbers to words.
+				if($age == 0) return;
+				if ($age == 1)
+					$response = sprintf(__("%d $singular"), 1);
+				else if($age < $factor)
+					$response = sprintf(__("%d $plural"), $age);
+		
+		
+				if(!empty($response)) {
+					break;
+				}
+				$totalfactor *= $factor;
+				$age = (int)($age / $factor);
+			}
+		
+			if($depth > 1) {
+				// recurse in if we wish to fill out the remainder
+				$next = (HumanizePHP::naturaltime(
+					// get a time in seconds relative to zero for whatever is leftover after what we've rendered so far
+					(($original < 0) ? (1) : (-1)) * ($original % (abs($age) * $totalfactor)), 
+					$depth-1, 
+					0, 	// reference time of zero
+					false	// don't wrap with "in" and "ago" as we're still building the string.
+				));
+		
+				if($next == null) // we return null if there were none of this subelement. I think this should probably recurse one deeper (we may have to skip units), but rounding here is clean sometimes too (you probably don't want to say "1 decade and 4 seconds.")
+				return $response;
+		
+		
+				if($depth > 2) // deal with commas. there's probably a better (read: more language agnostic) way to do this (produce a list of $nexts and join them).
+					$response = $response . __(", ") . $next;
+				else
+					$response = $response . __(" and ") . $next;
+		
+			} 
+		
+			if($wrap_string) {
+				if($original < 0) { $response = sprintf(__("in %s"), $response); }
+				else { $response = sprintf(__("%s ago"), $response); }
+			}
+		
+			return $response;
+		}
+
+
 		static function apnumber($number) {
 			$replace = array(0=>"zero", 1=>"one", 2=>"two", 3=>"three",
 					4=>"four", 5=>"five", 6=>"six", 7=>"seven",
