@@ -1,5 +1,5 @@
 <?php
-	namespace gburtini;
+	namespace gburtini\HumanizePHP;
 	if(!function_exists("__")) {	// allows you to define your own translation architecture.
 		function __($string) { 
 			return $string;
