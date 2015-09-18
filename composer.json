@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-0": {
-            "HumanizePHP": "src"
+            "gburtini\\HumanizePHP": "src"
         }
     }
 }
