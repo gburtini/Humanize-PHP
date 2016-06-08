@@ -218,7 +218,7 @@
 				if($single != 0 || $number < 10)
 					$parts[] = $singles[$single];
 				
-				if($number > 10 && $number < 100) {
+				if($number > 10 && $specialCheck != 0) {
 					$parts[] = $tens[ $number[strlen($number)-2] ] . " -";
 				}
 			}

@@ -1,6 +1,7 @@
 <?php
 	require_once "src/gburtini/HumanizePHP/HumanizePHP.php";
 
+	date_default_timezone_set("UTC");
 	use gburtini\HumanizePHP\HumanizePHP;
 	for($i=0;$i<100;$i++) {
 		echo HumanizePHP::ordinal($i) . "\t" . HumanizePHP::apnumber($i) . "\t" . HumanizePHP::intword($i*22000000) . "\n";
@@ -14,11 +15,11 @@
 	
 	echo HumanizePHP::checkize(144) . "\n";
 
-	echo HumanizePHP::checkize(100) . "\n";
 	echo HumanizePHP::checkize(198234) . "\n";
-	echo HumanizePHP::checkize(9999999999) . "\n";		
 	echo HumanizePHP::checkize(198) . "\n";
 	echo HumanizePHP::checkize(999) . "\n";
 
 	echo HumanizePHP::naturaltime(time() + 60) . "\n";
+	echo HumanizePHP::checkize(100) . "\n";
+	echo HumanizePHP::checkize(9999999999) . "\n";		
 ?>
