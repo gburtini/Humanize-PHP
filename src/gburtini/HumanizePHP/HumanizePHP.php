@@ -214,14 +214,17 @@
 			if($specialCheck <= 19 && $specialCheck >= 10) {
 				$parts[] = $ten_singles[$number[strlen($number)-1]];
 			} else {
-				$parts[] = $singles[$number[strlen($number)-1]];
-				if($number > 10) {
-					$parts[] = $tens[$number[strlen($number)-2]] . " -";
+				$single = $number[strlen($number)-1];
+				if($single != 0 || $number < 10)
+					$parts[] = $singles[$single];
+				
+				if($number > 10 && $number < 100) {
+					$parts[] = $tens[ $number[strlen($number)-2] ] . " -";
 				}
 			}
 
 			// special hundreds case (not a multiple of 3).
-			if($number > pow(10, 2)) {
+			if($number >= pow(10, 2)) {
 				$hundredsCount = $number[strlen($number)-3];
 				if($hundredsCount != 0) {
 					$parts[] = $singles[$hundredsCount] . " hundred";
